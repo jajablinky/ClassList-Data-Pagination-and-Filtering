@@ -77,7 +77,7 @@ let dataStudents = [];
 search.addEventListener('keyup', (e) => {
    const searchString = e.target.value.toLowerCase();
    const filteredStudents = data.filter( student =>{
-      return student.name.first.toLowerCase().includes(searchString) || student.name.first.toLowerCase().includes(searchString);
+      return student.name.first.toLowerCase().includes(searchString) || student.name.last.toLowerCase().includes(searchString);
    });
    console.log(filteredStudents);
    showPage(filteredStudents, 1);
