@@ -1,10 +1,10 @@
 /*
-Treehouse Techdegree:
-FSJS Project 2 - Data Pagination and Filtering
+Data Pagination and Filtering
 */
 
 /*
-This function will insert/append the elements needed for student details
+This function will insert/append the elements needed for student details. 
+The data will be a parameter once its called so that this function is able to scan through the object properties and being displayed in the template literal.
 */
 
 function showPage(list, page) {
@@ -33,12 +33,14 @@ function showPage(list, page) {
 showPage(data, 1);
 
 /*
-This function will create and insert/append the elements needed for the pagination buttons
+This function will create and insert/append the elements needed for the pagination buttons.
+Eventlistener is looking for clicks on any targets with the tagName 'BUTTON' so that the active class name can be transfered to that target.
+data again will be a parameter to be used with this function so that the pages can be dynamically be stored.
 */
 
 function addPagination(list) {
   const numOfPages = Math.ceil(list.length / 9);
-  const linkList = document.querySelector('UL.link-list');
+  const linkList = document.querySelector("UL.link-list");
   linkList.innerHTML = "";
   for (i = 1; i <= numOfPages; i++) {
     const button = `<li>
@@ -60,26 +62,58 @@ function addPagination(list) {
 }
 
 addPagination(data);
-
 /*
-Creating a search bar.
+Creating a search bar and storing it in header with class name header.
 */
-const searchDiv = document.querySelector('HEADER.header');
-searchDiv.className = 'student-search';
+const searchDiv = document.querySelector("HEADER.header");
+searchDiv.className = "student-search";
 searchDiv.innerHTML += `<label for="search" class="student-search">
 <span>Search by name</span>
 <input id="search" placeholder="Search by name...">
 <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
 </label>`;
-const search = document.querySelector('#search');
-let dataStudents = [];
+const search = document.querySelector("#search");
 
-search.addEventListener('keyup', (e) => {
-   const searchString = e.target.value.toLowerCase();
-   const filteredStudents = data.filter( student =>{
-      return student.name.first.toLowerCase().includes(searchString) || student.name.last.toLowerCase().includes(searchString);
-   });
-   console.log(filteredStudents);
-   showPage(filteredStudents, 1);
-   addPagination(filteredStudents); 
+/*
+Using keyup to listen for any keys being lifted to compare with input string being entered.
+toLowerCase() is being used to make it so that regardless of case its still able to filter out the students properly for user.
+*/
+
+search.addEventListener("keyup", (e) => {
+  const searchString = e.target.value.toLowerCase();
+  const filteredStudents = data.filter((student) => {
+    return (
+      student.name.first.toLowerCase().includes(searchString) ||
+      student.name.last.toLowerCase().includes(searchString)
+    );
+  });
+console.log(filteredStudents);
+  if (filteredStudents.length <= 0){
+    const noResults = document.createElement('p');
+    const text = document.createTextNode('No results found');
+    noResults.appendChild(text);
+    searchDiv.appendChild(noResults);
+    showPage(filteredStudents, 1);
+  } else {
+  showPage(filteredStudents, 1);
+  }
+  addPagination(filteredStudents);
 });
+
+/*
+Submit being considered for search bar in case user decides to copy and paste so that keys aren't being detected.
+*/
+
+search.addEventListener("submit", (e) => {
+  const searchString = e.target.value.toLowerCase();
+  const filteredStudents = data.filter((student) => {
+    return (
+      student.name.first.toLowerCase().includes(searchString) ||
+      student.name.last.toLowerCase().includes(searchString)
+    );
+  });
+  console.log(filteredStudents);
+  showPage(filteredStudents, 1);
+  addPagination(filteredStudents);
+});
+
