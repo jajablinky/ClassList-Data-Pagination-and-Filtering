@@ -27,12 +27,11 @@ const studentList = document.querySelector('UL.student-list');
 studentList.innerHTML = '';
 for (i = 0; i < list.length; i++) {
    if( i >= startIndex && i < endIndex) {
-      const studentItem = `${data[i]}`
-   } 
-
-}
-
-
+      // this is where i get lost
+      const studentItem = `${document.createElement('li')}`
+      studentList.innerHTML = studentItem;
+   };
+};
 };
 /*
 Create the `addPagination` function
