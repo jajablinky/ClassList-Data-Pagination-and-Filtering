@@ -87,15 +87,27 @@ search.addEventListener("keyup", (e) => {
       student.name.last.toLowerCase().includes(searchString)
     );
   });
-console.log(filteredStudents);
-  if (filteredStudents.length <= 0){
-    const noResults = document.createElement('p');
-    const text = document.createTextNode('No results found');
+  console.log(filteredStudents);
+  if (
+    filteredStudents.length <= 0 &&
+    searchDiv.lastElementChild.nodeName !== "P"
+  ) {
+    const noResults = document.createElement("p");
+    const text = document.createTextNode("No results found");
     noResults.appendChild(text);
     searchDiv.appendChild(noResults);
     showPage(filteredStudents, 1);
+  } else if (
+    filteredStudents.length > 0 &&
+    searchDiv.lastElementChild.nodeName === "P"
+  ) {
+    for (i = 0; i < searchDiv.childNodes.length; i++) {
+      if (searchDiv.childNodes[i].nodeName === "P") {
+        searchDiv.removeChild(searchDiv.children[i]);
+      }
+    }
   } else {
-  showPage(filteredStudents, 1);
+    showPage(filteredStudents, 1);
   }
   addPagination(filteredStudents);
 });
@@ -116,4 +128,3 @@ search.addEventListener("submit", (e) => {
   showPage(filteredStudents, 1);
   addPagination(filteredStudents);
 });
-
