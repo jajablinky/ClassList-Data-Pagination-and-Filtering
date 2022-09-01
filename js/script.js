@@ -103,7 +103,8 @@ search.addEventListener("keyup", (e) => {
   ) {
     for (i = 0; i < searchDiv.childNodes.length; i++) {
       if (searchDiv.childNodes[i].nodeName === "P") {
-        searchDiv.removeChild(searchDiv.children[i]);
+        searchDiv.removeChild(searchDiv.childNodes[i]);
+        showPage(filteredStudents, 1);
       }
     }
   } else {
