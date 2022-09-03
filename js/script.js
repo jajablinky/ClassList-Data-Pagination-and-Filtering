@@ -80,7 +80,8 @@ toLowerCase() is being used to make it so that regardless of case its still able
 */
 
 search.addEventListener("keyup", (e) => {
-  const searchString = e.target.value.toLowerCase();
+  let searchString = e.target.value.toLowerCase();
+  searchString = searchString.trim();
   const filteredStudents = data.filter((student) => {
     return (
       student.name.first.toLowerCase().includes(searchString) ||
